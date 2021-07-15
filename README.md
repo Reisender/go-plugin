@@ -26,12 +26,35 @@ type PluginInterface struct {
 }
 ```
 
+Build the plugin itself.
+
+```golang
+// ./example/plugin.go
+package main
+
+func Hello(name string) string {
+	return "Hello " + name + "!"
+}
+
+func Add(a, b int) int {
+	return a + b
+}
+
+func Multiply(a, b int) int {
+	return a * b
+}
+```
+
+```bash
+go build --buildmode=plugin -o ./example/plugin.so ./example/plugin.go
+```
+
 Then you load the plugin into an instance of that struct.
 
 ```golang
 instance := PluginInterface{}
 
-err := plugin.Load(&instance, "./path/to/plugin.so")
+err := plugin.Load(&instance, "./example/plugin.so")
 if err != nil {
   log.Fatal(err)
 }
