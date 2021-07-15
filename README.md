@@ -19,7 +19,7 @@ progress and not have to deal the loading and validating the plugin.
 First, you define a struct to define (and be the instance for) a plugin.
 
 ```golang
-type PluginInterface struct {
+type Adapter struct {
   Hello func(string)   string
   Add   func(int, int) int
   Mult  func(int, int) int     `lookup:"Multiply"`
@@ -52,7 +52,7 @@ go build --buildmode=plugin -o ./example/plugin.so ./example/plugin.go
 Then you load the plugin into an instance of that struct.
 
 ```golang
-instance := PluginInterface{}
+instance := Adapter{}
 
 err := plugin.Load(&instance, "./example/plugin.so")
 if err != nil {

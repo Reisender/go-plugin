@@ -10,13 +10,13 @@ import (
 //go:generate go build --buildmode=plugin -o ./example/some-plugin.so ./example/hello.go
 
 func ExampleLoad() {
-	type pluginInterface struct {
+	type Adapter struct {
 		Hello func(name string) string
 		Add   func(int, int) int
 		Mult  func(int, int) int `lookup:"Multiply"`
 	}
 
-	loadedPlugin := pluginInterface{}
+	loadedPlugin := Adapter{}
 
 	err := plugin.Load(&loadedPlugin, "./example/some-plugin.so")
 	if err != nil {
