@@ -52,7 +52,10 @@ func fill(plg interface{}, pluginSource *plugin.Plugin) error {
 		plgFld := p.Field(i)
 
 		// lookup the field name in the plugin
-		name := fld.Tag.Get("lookup")
+		name, ok := fld.Tag.Lookup("lookup")
+		if !ok {
+			name = fld.Name
+		}
 		v, err := pluginSource.Lookup(name)
 		if err != nil {
 			return fmt.Errorf("%v : %v", name, ErrLookupFailed)
